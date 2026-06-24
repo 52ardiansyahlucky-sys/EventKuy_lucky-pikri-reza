@@ -3,7 +3,9 @@
 use App\Http\Controllers\EventBudgetController;
 use App\Http\Controllers\EventRundownController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventVenueController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VenueController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,6 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/events/{event}/budgets', [EventBudgetController::class, 'store'])->name('budgets.store');
     Route::put('/events/{event}/budgets/{budget}', [EventBudgetController::class, 'update'])->name('budgets.update');
     Route::delete('/events/{event}/budgets/{budget}', [EventBudgetController::class, 'destroy'])->name('budgets.destroy');
+
+    // === Modul Venue (Mhs 2) ===
+    Route::resource('venues', VenueController::class);
+
+    // === Hubungkan venue ke event (pivot, Mhs 2) ===
+    Route::post('/events/{event}/venues', [EventVenueController::class, 'store'])->name('event-venues.store');
+    Route::delete('/events/{event}/venues/{venue}', [EventVenueController::class, 'destroy'])->name('event-venues.destroy');
 });
 
 require __DIR__.'/auth.php';

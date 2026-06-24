@@ -40,6 +40,57 @@
                 </dl>
             </div>
 
+            {{-- Venue Event --}}
+            <div class="bg-white shadow-sm sm:rounded-lg p-6">
+                <h3 class="font-semibold text-lg mb-4">Venue / Lokasi</h3>
+
+                @if ($event->venues->isEmpty())
+                    <p class="text-gray-500 text-sm mb-4">Belum ada venue yang dipilih untuk event ini.</p>
+                @else
+                    <ul class="divide-y text-sm mb-4">
+                        @foreach ($event->venues as $venue)
+                            <li class="py-2 flex justify-between items-center">
+                                <div>
+                                    <a href="{{ route('venues.show', $venue) }}" class="text-indigo-600 hover:underline font-medium">{{ $venue->name }}</a>
+                                    <span class="text-gray-500"> &middot; {{ $venue->city }}</span>
+                                    @if ($venue->hasCoordinates())
+                                        <span class="text-gray-400 text-xs"> ({{ $venue->latitude }}, {{ $venue->longitude }})</span>
+                                    @endif
+                                    @if ($venue->pivot->notes)
+                                        <p class="text-gray-500 text-xs mt-1">{{ $venue->pivot->notes }}</p>
+                                    @endif
+                                </div>
+                                <form action="{{ route('event-venues.destroy', [$event, $venue]) }}" method="POST" onsubmit="return confirm('Lepas venue ini dari event?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:underline">Lepas</button>
+                                </form>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+
+                {{-- Form tambah venue ke event --}}
+                <form action="{{ route('event-venues.store', $event) }}" method="POST" class="grid grid-cols-3 gap-2 items-end">
+                    @csrf
+                    <div class="col-span-2">
+                        <label class="block text-xs text-gray-500">Pilih Venue</label>
+                        <select name="venue_id" required class="w-full rounded-md border-gray-300 text-sm">
+                            <option value="">-- Pilih Venue --</option>
+                            @foreach ($availableVenues as $venue)
+                                <option value="{{ $venue->id }}">{{ $venue->name }} ({{ $venue->city }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="px-3 py-2 bg-indigo-600 text-white rounded-md text-sm h-fit">+ Tambah Venue</button>
+                </form>
+                @if ($availableVenues->isEmpty())
+                    <p class="text-xs text-gray-400 mt-2">
+                        Belum ada data venue. <a href="{{ route('venues.create') }}" class="text-indigo-600 hover:underline">Tambah venue baru</a>.
+                    </p>
+                @endif
+            </div>
+
             {{-- Rundown Acara --}}
             <div class="bg-white shadow-sm sm:rounded-lg p-6">
                 <h3 class="font-semibold text-lg mb-4">Rundown Acara</h3>

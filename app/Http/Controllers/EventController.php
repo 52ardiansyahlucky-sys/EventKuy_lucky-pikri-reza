@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,9 +46,15 @@ class EventController extends Controller
     {
         $this->authorizeOwner($event);
 
-        $event->load(['rundowns', 'budgets']);
+        $event->load(['rundowns', 'budgets', 'venues']);
 
-        return view('events.show', compact('event'));
+        // Venue milik user ini yang belum dipasangkan ke event ini
+        $attachedVenueIds = $event->venues->pluck('id');
+        $availableVenues = Venue::where('user_id', Auth::id())
+            ->whereNotIn('id', $attachedVenueIds)
+            ->get();
+
+        return view('events.show', compact('event', 'availableVenues'));
     }
 
     public function edit(Event $event)

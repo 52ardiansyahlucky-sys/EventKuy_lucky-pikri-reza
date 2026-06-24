@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
@@ -38,6 +39,13 @@ class Event extends Model
     public function budgets(): HasMany
     {
         return $this->hasMany(EventBudget::class);
+    }
+
+    public function venues(): BelongsToMany
+    {
+        return $this->belongsToMany(Venue::class, 'event_venue')
+            ->withPivot('notes')
+            ->withTimestamps();
     }
 
     // Helper: total anggaran terpakai (sum dari semua budget item)
