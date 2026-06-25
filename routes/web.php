@@ -6,6 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventVenueController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VenueController;
+use App\Http\Controllers\WeatherReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -40,6 +41,9 @@ Route::middleware('auth')->group(function () {
     // === Hubungkan venue ke event (pivot, Mhs 2) ===
     Route::post('/events/{event}/venues', [EventVenueController::class, 'store'])->name('event-venues.store');
     Route::delete('/events/{event}/venues/{venue}', [EventVenueController::class, 'destroy'])->name('event-venues.destroy');
+
+    // === Modul Cuaca (Mhs 3) ===
+    Route::post('/events/{event}/weather/refresh', [WeatherReportController::class, 'refresh'])->name('weather.refresh');
 });
 
 require __DIR__.'/auth.php';

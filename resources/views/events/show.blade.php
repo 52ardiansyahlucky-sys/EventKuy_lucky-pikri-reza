@@ -13,6 +13,10 @@
                 <div class="p-4 bg-green-100 text-green-700 rounded-md">{{ session('success') }}</div>
             @endif
 
+            @if (session('error'))
+                <div class="p-4 bg-red-100 text-red-700 rounded-md">{{ session('error') }}</div>
+            @endif
+
             {{-- Detail Event --}}
             <div class="bg-white shadow-sm sm:rounded-lg p-6">
                 <h3 class="font-semibold text-lg mb-4">Detail Event</h3>
@@ -88,6 +92,62 @@
                     <p class="text-xs text-gray-400 mt-2">
                         Belum ada data venue. <a href="{{ route('venues.create') }}" class="text-indigo-600 hover:underline">Tambah venue baru</a>.
                     </p>
+                @endif
+            </div>
+
+            {{-- Laporan Kesiapan Cuaca --}}
+            <div class="bg-white shadow-sm sm:rounded-lg p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-lg">Laporan Kesiapan Cuaca</h3>
+                    <form action="{{ route('weather.refresh', $event) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="px-3 py-1.5 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700">
+                            🔄 Cek Cuaca Sekarang
+                        </button>
+                    </form>
+                </div>
+
+                @if ($event->weatherReports->isEmpty())
+                    <p class="text-gray-500 text-sm">
+                        Belum ada laporan cuaca. Klik "Cek Cuaca Sekarang" untuk mengambil data terbaru
+                        (pastikan event ini sudah memiliki venue dengan koordinat lat/long terisi).
+                    </p>
+                @else
+                    <div class="space-y-3">
+                        @foreach ($event->weatherReports as $report)
+                            <div class="border rounded-md p-4
+                                @class([
+                                    'border-green-300 bg-green-50' => $report->recommendation_level === 'aman',
+                                    'border-yellow-300 bg-yellow-50' => $report->recommendation_level === 'waspada',
+                                    'border-red-300 bg-red-50' => $report->recommendation_level === 'siaga',
+                                ])">
+                                <div class="flex justify-between items-start mb-2">
+                                    <p class="font-medium text-sm">{{ $report->venue->name }} &middot; {{ $report->venue->city }}</p>
+                                    <span class="px-2 py-0.5 rounded-full text-xs font-medium
+                                        @class([
+                                            'bg-green-200 text-green-800' => $report->recommendation_level === 'aman',
+                                            'bg-yellow-200 text-yellow-800' => $report->recommendation_level === 'waspada',
+                                            'bg-red-200 text-red-800' => $report->recommendation_level === 'siaga',
+                                        ])">
+                                        {{ ucfirst($report->recommendation_level) }}
+                                    </span>
+                                </div>
+
+                                <div class="grid grid-cols-4 gap-2 text-xs text-gray-600 mb-2">
+                                    <div>🌡️ {{ $report->temperature }}°C</div>
+                                    <div>💧 Hujan: {{ $report->rain_probability }}%</div>
+                                    <div>💨 Angin: {{ $report->wind_speed }} m/s</div>
+                                    <div>☁️ {{ ucfirst($report->weather_description) }}</div>
+                                </div>
+
+                                <p class="text-sm text-gray-700">{{ $report->recommendation_text }}</p>
+
+                                <p class="text-xs text-gray-400 mt-2">
+                                    Terakhir dicek: {{ $report->checked_at->format('d M Y, H:i') }}
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
                 @endif
             </div>
 

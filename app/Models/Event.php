@@ -48,6 +48,11 @@ class Event extends Model
             ->withTimestamps();
     }
 
+    public function weatherReports(): HasMany
+    {
+        return $this->hasMany(WeatherReport::class);
+    }
+
     // Helper: total anggaran terpakai (sum dari semua budget item)
     public function getUsedBudgetAttribute(): float
     {

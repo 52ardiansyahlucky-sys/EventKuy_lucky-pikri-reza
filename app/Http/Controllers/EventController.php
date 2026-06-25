@@ -46,7 +46,7 @@ class EventController extends Controller
     {
         $this->authorizeOwner($event);
 
-        $event->load(['rundowns', 'budgets', 'venues']);
+        $event->load(['rundowns', 'budgets', 'venues', 'weatherReports.venue']);
 
         // Venue milik user ini yang belum dipasangkan ke event ini
         $attachedVenueIds = $event->venues->pluck('id');

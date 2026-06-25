@@ -44,6 +44,11 @@ class Venue extends Model
             ->withTimestamps();
     }
 
+    public function weatherReports(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(WeatherReport::class);
+    }
+
     // Helper untuk Mhs 3: cek apakah venue ini punya koordinat lengkap
     public function hasCoordinates(): bool
     {
