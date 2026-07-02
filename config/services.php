@@ -2,18 +2,6 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Third Party Services
-    |--------------------------------------------------------------------------
-    |
-    | This file is for storing the credentials for third party services such
-    | as Mailgun, Postmark, AWS and more. This file provides the de facto
-    | location for this type of information, allowing packages to have
-    | a conventional file to locate the various service credentials.
-    |
-    */
-
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],
@@ -36,7 +24,17 @@ return [
     ],
 
     'openweather' => [
-        'key' => env('OPENWEATHER_API_KEY'),
-        'base_url' => env('OPENWEATHER_BASE_URL', 'https://api.openweathermap.org/data/2.5'),
+        // Pastikan env key sesuai .env: OPENWEATHER_KEY (atau fallback OPENWEATHER_API_KEY)
+        'key' => env('OPENWEATHER_KEY', env('OPENWEATHER_API_KEY')),
+        'base_url' => env(
+            'OPENWEATHER_BASE_URL',
+            'https://api.openweathermap.org/data/2.5'
+        ),
     ],
+
+    'google_geocoding' => [
+        'key' => env('GOOGLE_GEOCODING_API_KEY'),
+    ],
+
 ];
+

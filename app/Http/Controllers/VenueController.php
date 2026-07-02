@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Venue;
+use App\Services\GeocodingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -32,6 +33,20 @@ class VenueController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validateVenue($request);
+
+        // Auto geocode: jika latitude/longitude kosong, isi berdasarkan city
+        if (empty($validated['latitude']) || empty($validated['longitude'])) {
+            if (! empty($validated['city'])) {
+                /** @var \App\Services\GeocodingService $geocoder */
+                $geocoder = app(\App\Services\GeocodingService::class);
+                $coords = $geocoder->geocodeCity($validated['city']);
+
+                if ($coords) {
+                    $validated['latitude'] = $coords['latitude'];
+                    $validated['longitude'] = $coords['longitude'];
+                }
+            }
+        }
 
         if ($request->hasFile('photo')) {
             $validated['photo'] = $request->file('photo')->store('venues', 'public');
@@ -67,6 +82,20 @@ class VenueController extends Controller
         $this->authorizeOwner($venue);
 
         $validated = $this->validateVenue($request);
+
+        // Auto geocode: jika latitude/longitude kosong, isi berdasarkan city
+        if (empty($validated['latitude']) || empty($validated['longitude'])) {
+            if (! empty($validated['city'])) {
+                /** @var \App\Services\GeocodingService $geocoder */
+                $geocoder = app(\App\Services\GeocodingService::class);
+                $coords = $geocoder->geocodeCity($validated['city']);
+
+                if ($coords) {
+                    $validated['latitude'] = $coords['latitude'];
+                    $validated['longitude'] = $coords['longitude'];
+                }
+            }
+        }
 
         if ($request->hasFile('photo')) {
             // Hapus foto lama supaya storage tidak penuh sampah
