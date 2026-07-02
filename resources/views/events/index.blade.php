@@ -4,15 +4,45 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Daftar Event Saya
             </h2>
-            <a href="{{ route('events.create') }}"
-               class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm font-medium">
-                + Buat Event Baru
-            </a>
+            <!-- CTA dipindahkan ke hero banner -->
         </div>
     </x-slot>
 
-    <div class="py-12">
+    <!-- Hero background (realistis & profesional) -->
+    <div class="relative isolate overflow-hidden">
+        <div class="absolute inset-0 -z-10">
+            <div class="absolute inset-0 bg-cover bg-center"
+                 style="background-image: url('/images/event-background.jpg');">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-indigo-900/45 to-indigo-900/10"></div>
+        </div>
+
+        <div class="py-12 sm:py-16">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <h3 class="text-2xl sm:text-3xl font-semibold text-white">
+                            Daftar Event Saya
+                        </h3>
+                        <p class="mt-2 text-sm sm:text-base text-white/80">
+                            Kelola event yang kamu buat—mulai dari draft, planned, sampai completed.
+                        </p>
+                    </div>
+
+                    <div class="sm:text-right">
+                        <a href="{{ route('events.create') }}"
+                           class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm font-medium">
+                            + Buat Event Baru
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-6 sm:py-10">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
 
             @if (session('success'))
                 <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-md">

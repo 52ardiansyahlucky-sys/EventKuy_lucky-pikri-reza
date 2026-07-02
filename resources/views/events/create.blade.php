@@ -3,7 +3,26 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">Buat Event Baru</h2>
     </x-slot>
 
-    <div class="py-12">
+    <!-- Hero background (realistis & profesional) -->
+    <div class="relative isolate overflow-hidden">
+        <div class="absolute inset-0 -z-10">
+            <div class="absolute inset-0 bg-cover bg-center"
+                 style="background-image: url('/images/event-background.jpg');">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-indigo-900/45 to-indigo-900/10"></div>
+        </div>
+
+        <div class="py-12 sm:py-16">
+            <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+                <div>
+                    <h3 class="text-2xl sm:text-3xl font-semibold text-white">Buat Event Baru</h3>
+                    <p class="mt-2 text-sm sm:text-base text-white/80">Siapkan detail eventmu dengan tampilan yang rapi dan profesional.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-6 sm:py-10">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white p-6 shadow-sm sm:rounded-lg">
                 <form action="{{ route('events.store') }}" method="POST" class="space-y-4">

@@ -4,14 +4,42 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Daftar Venue
             </h2>
-            <a href="{{ route('venues.create') }}"
-               class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm font-medium">
-                + Tambah Venue
-            </a>
+
         </div>
     </x-slot>
 
-    <div class="py-12">
+    <!-- Hero background (realistis & profesional) -->
+    <div class="relative isolate overflow-hidden">
+        <div class="absolute inset-0 -z-10">
+            <div class="absolute inset-0 bg-cover bg-center"
+                 style="background-image: url('/images/event-background.jpg');">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-indigo-900/45 to-indigo-900/10"></div>
+        </div>
+
+        <div class="py-12 sm:py-16">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <h3 class="text-2xl sm:text-3xl font-semibold text-white">
+                            Daftar Venue
+                        </h3>
+                        <p class="mt-2 text-sm sm:text-base text-white/80">
+                            Pilih venue yang sesuai untuk kebutuhan eventmu—hall, ballroom, outdoor, atau ruang meeting.
+                        </p>
+                    </div>
+                    <div class="sm:text-right">
+                        <a href="{{ route('venues.create') }}"
+                           class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm font-medium">
+                            + Tambah Venue
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-6 sm:py-10">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             @if (session('success'))
