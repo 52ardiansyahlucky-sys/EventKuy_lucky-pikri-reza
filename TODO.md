@@ -1,9 +1,9 @@
 # TODO
 
-- [ ] Cek konfigurasi OpenWeather di `config/services.php` dan pastikan key/base_url sesuai dengan `WeatherService.php`.
-- [ ] Perbaiki implementasi `config/services.php` supaya API weather bisa dipanggil.
-- [x] Jalankan command `php artisan weather:check-upcoming --days=3` untuk verifikasi.
-- [ ] Pastikan ada event+venue dengan koordinat dan event_date dalam rentang yang dicek (hasil sementara: tidak ada event dalam H-3).
-- [ ] Pastikan migrasi/kolom di `weather_reports` sesuai data yang disimpan.
-
+- [ ] Ganti `resources/views/events/index.blade.php` dengan tampilan hero full-width bergambar realistis + overlay hitam transparan.
+- [ ] Tambahkan parallax/zoom ringan pada background hero.
+- [ ] Buat card event bergaya glassmorphism (rounded-xl, shadow-xl, backdrop-blur) + hover animasi halus.
+- [ ] Pastikan CRUD & pagination tetap berjalan: Tambah (link create), Edit, Hapus (DELETE form), Detail (show), pagination `{{ $events->links() }}`.
+- [ ] Pastikan layout responsive: desktop/tablet/mobile.
+- [ ] Verifikasi tidak mengubah route, form, atau controller lain.
 

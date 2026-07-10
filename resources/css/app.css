@@ -1,3 +1,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Cinematic event ambient background */
+#event-ambient {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+.event-noise {
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="140" height="140"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="140" height="140" filter="url(%23n)" opacity="0.35"/%3E%3C/svg%3E');
+    mix-blend-mode: overlay;
+    opacity: 0.18;
+}
+
+.event-shimmer {
+    background:
+        linear-gradient(
+            110deg,
+            transparent 0%,
+            rgba(99,102,241,0.0) 30%,
+            rgba(99,102,241,0.22) 42%,
+            rgba(168,85,247,0.22) 52%,
+            rgba(168,85,247,0.0) 65%,
+            transparent 100%
+        );
+    filter: blur(12px);
+    opacity: 0.9;
+    animation: eventShimmer 10s linear infinite;
+}
+
+@keyframes eventShimmer {
+    0% { transform: translateX(-10%) translateY(0%); opacity: 0.55; }
+    45% { opacity: 0.95; }
+    100% { transform: translateX(10%) translateY(0%); opacity: 0.55; }
+}
+
+.event-content {
+    animation: eventContentIn 800ms ease-out both;
+}
+
+@keyframes eventContentIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0px); }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+    .event-shimmer { animation: none !important; }
+    .event-content { animation: none !important; }
+}
+
+

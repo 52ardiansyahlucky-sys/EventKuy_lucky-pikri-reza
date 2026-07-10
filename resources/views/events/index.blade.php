@@ -8,14 +8,36 @@
         </div>
     </x-slot>
 
-    <!-- Hero background (realistis & profesional) -->
+    <!-- Hero background tema event (realistis) -->
     <div class="relative isolate overflow-hidden">
         <div class="absolute inset-0 -z-10">
             <div class="absolute inset-0 bg-cover bg-center"
-                 style="background-image: url('/images/event-background.jpg');">
+                 style="background-image: url('/images/event-background.jpg'); filter: saturate(1.1) contrast(1.05);">
             </div>
+
+            <!-- Light beams / stage glow -->
+            <div class="absolute inset-0"
+                 style="background:
+                    radial-gradient(800px 400px at 50% 20%, rgba(255,255,255,0.22), transparent 55%),
+                    radial-gradient(700px 350px at 20% 30%, rgba(99,102,241,0.28), transparent 60%),
+                    radial-gradient(700px 350px at 80% 30%, rgba(168,85,247,0.24), transparent 60%);
+                 mix-blend-mode: screen;">
+            </div>
+
+            <!-- Dark cinematic overlay -->
             <div class="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-indigo-900/45 to-indigo-900/10"></div>
+
+            <!-- Subtle bokeh particles -->
+            <div class="absolute inset-0"
+                 style="background:
+                    radial-gradient(circle at 20% 70%, rgba(255,255,255,0.14) 0 2px, transparent 3px),
+                    radial-gradient(circle at 60% 40%, rgba(255,255,255,0.10) 0 2px, transparent 3px),
+                    radial-gradient(circle at 80% 75%, rgba(255,255,255,0.12) 0 2px, transparent 3px),
+                    radial-gradient(circle at 35% 20%, rgba(255,255,255,0.09) 0 2px, transparent 3px);
+                 opacity: 0.55;">
+            </div>
         </div>
+
 
         <div class="py-12 sm:py-16">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -104,3 +126,5 @@
         </div>
     </div>
 </x-app-layout>
+
+
